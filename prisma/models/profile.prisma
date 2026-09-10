@@ -1,0 +1,25 @@
+model Profile {
+  id     String @id @default(uuid())
+  userId String @unique @map("user_id")
+
+  firstName String  @map("first_name")
+  lastName  String? @map("last_name")
+
+  headline  String?
+  bio       String?
+  location  String?
+  avatarUrl String? @map("avatar_url")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+
+  experiences Experience[]
+  projects    Project[]
+  skills      Skill[]
+  socialLinks SocialLink[]
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("profiles")
+}

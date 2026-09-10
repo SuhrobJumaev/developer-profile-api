@@ -1,0 +1,24 @@
+model SocialLink {
+  id        String @id @default(uuid())
+  profileId String @map("profile_id")
+
+  type SocialLinkType
+  url  String
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@unique([profileId, type])
+  @@index([profileId])
+  @@map("social_links")
+}
+
+enum SocialLinkType {
+  GITHUB
+  LINKEDIN
+  TELEGRAM
+  WEBSITE
+  OTHER
+}
