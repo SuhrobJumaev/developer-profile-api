@@ -1,16 +1,13 @@
-FROM node:20-alpine
+FROM node:22-alpine
 
-ADD ./ /app
 WORKDIR /app
 
-RUN rm -rf ./docker
+COPY package.json yarn.lock ./
 
-RUN apk add git
-RUN git config --global user.email "dockerbot@example.com"
-RUN git config --global user.name "DockerBot"
+RUN yarn install --frozen-lockfile
 
-RUN yarn install
+COPY . .
+
 RUN yarn build
 
-# start nest
-ENTRYPOINT ["yarn", "start:prod"]
+CMD ["yarn", "start:prod"]
