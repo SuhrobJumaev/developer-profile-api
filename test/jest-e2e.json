@@ -1,0 +1,15 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": "../",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "@app/crypto-utils/(.*)": "<rootDir>/src/crypto-utils/$1",
+    "@app/logger/(.*)": "<rootDir>/src/logger/$1",
+    "@app/database/(.*)": "<rootDir>/src/database/$1",
+    "@app/rabbit/(.*)": "<rootDir>/src/rabbit/$1"
+  }
+}
