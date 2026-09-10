@@ -1,6 +1,5 @@
 model Profile {
   id     String @id @default(uuid())
-  userId String @unique @map("user_id")
 
   firstName String  @map("first_name")
   lastName  String? @map("last_name")
@@ -9,9 +8,6 @@ model Profile {
   bio       String?
   location  String?
   avatarUrl String? @map("avatar_url")
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
 
   experiences Experience[]
   projects    Project[]
