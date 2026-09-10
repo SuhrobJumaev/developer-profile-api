@@ -1,0 +1,20 @@
+model Experience {
+  id        String @id @default(uuid())
+  profileId String @map("profile_id")
+
+  company     String
+  position    String
+  description String?
+
+  startedAt DateTime  @map("started_at") @db.Date
+  endedAt   DateTime? @map("ended_at") @db.Date
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([profileId])
+  @@map("experiences")
+}
