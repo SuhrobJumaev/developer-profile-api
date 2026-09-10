@@ -2,71 +2,36 @@ version: "3.9"
 
 services:
   # Nest backend application
-  app-backend:
+  developer-profile-api:
     build:
       context: ..
       dockerfile: ./docker/Dockerfile
-    image: app-backend:latest
-    container_name: app-backend
+    image: developer-profile-api:latest
+    container_name: developer-profile-api
     restart: on-failure
     depends_on:
       - app-db
-      - app-rabbit
-    links:
-      - app-db
-      - app-rabbit
-      - app-redis
     env_file:
       - .env.docker
-    deploy:
-      replicas: 1
     ports:
       - "5001:5000"
 
-  # Redis service
-  app-redis:
-    image: redis:7-alpine
-    container_name: app-redis
-    restart: always
-    ports:
-      - '6379:6379'
-    command: redis-server --save 20 1 --loglevel warning --requirepass appRedisPass
-    volumes:
-      - redis:/data
-
-  # Rabbit MQ
-  app-rabbit:
-    container_name: app-rabbit
-    image: rabbitmq:3.13-management
-    restart: always
-    environment:
-      RABBITMQ_DEFAULT_USER: "app"
-      RABBITMQ_DEFAULT_PASS: "rabbitmq"
-      RABBITMQ_DEFAULT_VHOST: "/app"
-    ports:
-      - "15673:15672" # Rabbit Management url: http://127.0.0.1:15673/
-      - "5673:5672"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:15672"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
 
   # PostgreSQL Database service
   app-db:
-    image: 'bitnami/postgresql:16'
+    image: postgres:16.4
     volumes:
-      - ./volumes/db-data:/bitnami/postgresql/data
+      - ./volumes/db-data:/var/lib/postgresql/data
     container_name: app-db
     restart: always
     environment:
-      POSTGRES_USER: "app"
-      POSTGRES_PASSWORD: "root"
-      POSTGRES_DB: "app_db"
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: app_db
     ports:
-      - "5433:5432"
+      - 5433:5432
 
-  # Adminer for database
+    # Adminer for database
   app-adminer:
     image: adminer:latest
     container_name: app-adminer
@@ -74,44 +39,9 @@ services:
       - app-db
     restart: always
     ports:
-      - "8082:8080"  # port for adminer 8082
-
-  # Grafana Loki containers
-  loki:
-    image: grafana/loki:2.7.0
-    container_name: app-loki
-    ports:
-      - "3100:3100"
+      - 8082:8080 # port for adminer 8082
     volumes:
-      # directory must be created first, with uid:gid 10001:10001
-      - ./volumes/loki:/loki
-
-  promtail:
-    image: grafana/promtail:2.7.0
-    container_name: app-promtail
-    volumes:
-      # custom config will read logs from the containers of this project
-      - ./loki/promtail-config.yaml:/etc/promtail/config.yml
-      # to read container labels and logs
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /var/lib/docker/containers:/var/lib/docker/containers
-
-  # will be available at http://127.0.0.1:3000
-  # default credentials: admin/admin
-  grafana:
-    image: grafana/grafana:latest
-    container_name: app-grafana
-    ports:
-      - "3000:3000"
-    volumes:
-      # directory must be created first, with uid:gid 472:472
-      - ./volumes/grafana:/var/lib/grafana
-      # automatically configure the loki datasource
-      - ./loki/grafana/provisioning/:/etc/grafana/provisioning/
-
-volumes:
-  redis:
-    driver: local
+      - ./database/adminer.css:/var/www/html/adminer.css # Mount the adminer style
 
 networks:
   default:
