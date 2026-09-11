@@ -2,7 +2,7 @@ model SocialLink {
   id        String @id @default(uuid())
   profileId String @map("profile_id")
 
-  type SocialLinkType
+  type String
   url  String
 
   profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
@@ -13,12 +13,4 @@ model SocialLink {
   @@unique([profileId, type])
   @@index([profileId])
   @@map("social_links")
-}
-
-enum SocialLinkType {
-  GITHUB
-  LINKEDIN
-  TELEGRAM
-  WEBSITE
-  OTHER
 }

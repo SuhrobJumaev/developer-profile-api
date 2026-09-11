@@ -20,7 +20,6 @@ export enum ExceptionMessage {
   CODE_TIME_EXPIRED = 'Code time expired',
   ADMIN_RESTRICTED = 'This operation is permitted to admins only',
 
-  // country
-  COUNTRY_NOT_FOUND = 'Country not found',
-  COUNTRY_NOT_AVAILABLE = 'Country not available for registration',
+  //Profile
+  PROFILE_NOT_FOUND = 'Profile not found',
 }

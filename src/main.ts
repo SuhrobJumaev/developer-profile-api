@@ -16,7 +16,7 @@ async function main(): Promise<void> {
   const adapter = app.get(HttpAdapterHost);
 
   app.useGlobalFilters(new AppExceptionsFilter(adapter));
-  app.useGlobalInterceptors(new ResponseInterceptor());
+  //app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.setGlobalPrefix(config.routePrefix);
 
@@ -25,7 +25,11 @@ async function main(): Promise<void> {
 
   app.enableShutdownHooks();
   app.enableCors(config.cors);
-  app.use(helmet());
+  app.use(
+    helmet({
+      contentSecurityPolicy: false,
+    }),
+  );
   app.use(json({ limit: config.maxBodySize }));
   app.use(urlencoded({ extended: true, limit: config.maxBodySize }));
 

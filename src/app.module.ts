@@ -4,6 +4,8 @@ import { DatabaseModule } from '@app/database/database.module';
 import { LoggerModule } from '@app/logger/logger.module';
 
 import { rateLimitOptions } from './constants/rate-limit';
+import { GraphqlModule } from './graphql/graphql.module';
+import { ProfileModule } from './modules/profile/profile.module';
 
 @Module({
   imports: [
@@ -13,10 +15,13 @@ import { rateLimitOptions } from './constants/rate-limit';
     /** Database module */
     DatabaseModule,
 
+    /**Graphql module */
+    GraphqlModule,
 
+    /** */
+    ProfileModule,
     /** Throttler module (Rate limit module) */
     ThrottlerModule.forRoot([rateLimitOptions]),
-
   ],
 })
 export class AppModule {}

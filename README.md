@@ -1,52 +1,64 @@
-# NestJS Starter Kit
+# Developer Profile API
 
-This repository provides examples of the main toolkit used to build a basic service using the NestJS framework.
+Backend application built with NestJS, GraphQL, Prisma and PostgreSQL.
 
 ## Requirements
 
 - **NodeJS**: v20+
 - **PostgreSQL**: 16.0+
-- **RabbitMQ**: 3.13+
-- **Redis**: 7.2+
+- **Docker**
+- **Docker Compose**
 
 ## Getting Started
 
 ### 1. Environment Setup
 
-- Create a `.env` file by copying `env.local`:
-  ```bash
-  cp .env.local .env
-  ```
+Create a `.env` file by copying `.env.local`:
+
+```bash
+cp .env.local .env
+```
+
+
+All required commands for Prisma, migrations, seed and application startup are available in `package.json`.
+
+When the application is started in standard or production mode, database migrations and seed data are applied automatically before the application starts.
 
 ### 2. Install Dependencies
 
-- Install the required Node modules:
-  ```bash
-  yarn install
-  ```
+Install the required Node modules:
 
-### 3. Run Tests
+```bash
+yarn install
+```
 
-- Start the test suite:
-  ```bash
-  yarn test
-  ```
 
 ### 4. Start the Server
 
-- Launch the development server:
+Launch the development server:
 
-  ```bash
-  yarn start:dev
-  ```
+```bash
+yarn start
+```
 
-- Access Swagger API documentation at http://localhost:5000/api/docs (default).
+Available endpoints:
+
+- **Backend**: `http://localhost:5004`
+- **GraphQL / Apollo Sandbox**: `http://localhost:5004/graphql`
 
 ## Docker Setup for Developers
 
-### Option 1: Using Docker Compose
+### Option 1: Local Development
 
-- Navigate to the docker directory and start the services:
+Use this option when the backend runs locally and PostgreSQL runs inside Docker.
+
+Make sure `.env` contains:
+
+```env
+DATABASE_URL=postgresql://app:root@localhost:5433/app_db?schema=public
+```
+
+Navigate to the Docker directory and start the local services:
 
 ```bash
 cd docker
@@ -54,31 +66,48 @@ cd docker
 docker-compose -f docker-compose.local.yml up -d
 ```
 
-- Access RabbitMQ Management at http://localhost:15673.
+Then start the backend in development mode.
 
-  - **Username**: `app`
-  - **Password**: `rabbitmq`
+Available services:
 
-- Access Adminer at http://localhost:8082.
-  - **System**: PostgreSQL
-  - **Server**: `app-db`
-  - **Username**: `app`
-  - **Password**: `root`
-  - **Database**: `app_db`
+- **Backend**: `http://localhost:5004`
+- **GraphQL / Apollo Sandbox**: `http://localhost:5004/graphql`
+- **PostgreSQL**: `localhost:5433`
+- **Adminer**: `http://localhost:8082`
 
-### Option 2: Building and Running Docker Image
+Adminer credentials:
 
-- Build the Docker image:
+- **System**: PostgreSQL
+- **Server**: `app-db`
+- **Username**: `app`
+- **Password**: `root`
+- **Database**: `app_db`
 
-```bash
-docker build -t app-backend:latest -f docker/Dockerfile .
+### Option 2: Full Docker Setup
+
+Use this option when the backend and PostgreSQL run together inside Docker.
+
+For this setup, `.env` must contain:
+
+```env
+DATABASE_URL=postgresql://app:root@app-db:5432/app_db?schema=public
 ```
 
-- Run the Docker container:
+Navigate to the Docker directory and start the application:
 
 ```bash
-docker run --name app-backend -d -p 5001:5000 app-backend:latest --env-file=.env
+cd docker
+
+docker-compose up -d --build
 ```
+
+Available services:
+
+- **Backend**: `http://localhost:5004`
+- **GraphQL / Apollo Sandbox**: `http://localhost:5004/graphql`
+- **Adminer**: `http://localhost:8082`
+
+Inside the Docker network, PostgreSQL is available at `app-db:5432`.
 
 ## File Naming Conventions
 
@@ -87,96 +116,86 @@ docker run --name app-backend -d -p 5001:5000 app-backend:latest --env-file=.env
 
 ## Project Structure
 
-<p align="center">
-  <img src="docs/project_structure.png" width="320" alt="Img Project structure" />
-</p>
+The application follows a modular NestJS structure.
 
 ## Directory Overview
 
-- **`.devops`**: Contains DevOps scripts for deployment and automation.
-- **`.devtools`**: Developer scripts for automating common tasks.
-- **`Makefile`**: Bash scripts for automation tasks.
-- **`libs`**: Business logic libraries.
-- **`crypton-libs`**: Project-wide entities, interfaces, and symbols.
-- **`contracts`**: Contracts for microservice interaction.
 - **`src`**: Core application code and configuration.
-  - **`config`**: Validation for `.env` files.
-  - **`console`**: Application-level console commands.
-  - **`constants`**: Application-level constants.
+  - **`config`**: Application configuration.
   - **`enums`**: Application-level enumerations.
   - **`filters`**: Error filters and handlers.
-  - **`i18n`**: Language files (JSON).
-  - **`migration`**: Raw database migrations.
-  - **`jobs`**: Kafka and RabbitMQ message handlers.
+  - **`modules`**: Application modules.
+- **`prisma`**: Prisma schema, migrations and seed configuration.
+- **`docker`**: Docker and Docker Compose configuration.
 
 ## Module Structure
 
-Each module follows this structure:
+Each module follows this structure where applicable:
 
 - **`<name>.module.ts`**: Module definition.
-- **`config`**: Module configuration services (e.g., `wallet.index.ts`).
-- **`console`**: Console command services (e.g., `wallet-pull.console.ts`).
-- **`constants`**: Module-specific constants.
-- **`controllers`**: HTTP controllers (e.g., `wallet.controller.ts`).
-- **`dto`**:
-  - **`command`**: Data-modifying commands (e.g., `balance-up.command.ts`).
-  - **`query`**: Data-querying commands (e.g., `balance-up.query.ts`).
-  - **`resource`**: Data resources (e.g., `balance.resource.ts`).
-- **`enums`**: Module-specific enumerations.
-- **`events`**: Event DTOs.
-- **`listeners`**: Event handlers.
-- **`i18n`**: Module-specific language files.
-- **`jobs`**: RabbitMQ and Kafka queue handlers.
-- **`entities`**: Models and entities (e.g., `wallet.entity.ts`).
-- **`repositories`**: Data repositories (e.g., `wallet.repository.ts`).
-- **`services`**: Module services (e.g., `wallet.service.ts`).
+- **`graphql`**: GraphQL-related components.
+  - **`models`**: GraphQL models.
+  - **`mappers`**: Mapping between Prisma entities and GraphQL models.
+  - **`selectors`**: Prisma selection based on requested GraphQL relations.
+- **`repositories`**: Database access through Prisma.
+- **`services`**: Application and business logic.
 
-## API Response Structure
+## GraphQL
 
-### Success Response
+The API uses GraphQL for profile retrieval.
 
-```
-{
-  "ok": true,
-  "result": {result - string, number, boolean or ResourceDTO}
-}
+GraphQL endpoint:
+
+```text
+http://localhost:5004/graphql
 ```
 
-- Success response example:
+Example query:
 
-```json
-{
-  "ok": true,
-  "result": {
-    "id": "CU7ZA69G68T8",
-    "firstName": "Suhrob",
-    "lastName": "Jumaev",
-    "email": "jumaevsuhrob102@gmail.com"
+```graphql
+query {
+  profile {
+    id
+    firstName
+    lastName
+    headline
+    bio
+    location
+    avatarUrl
+
+    skills {
+      id
+      name
+      level
+      createdAt
+    }
+
+    experiences {
+      id
+      company
+      position
+      description
+      startedAt
+      endedAt
+    }
+
+    projects {
+      id
+      name
+      description
+      repositoryUrl
+      liveUrl
+      startedAt
+      endedAt
+    }
+
+    socialLinks {
+      id
+      type
+      url
+    }
   }
 }
 ```
 
-### Error Response:
-
-```
-{
-  "ok": false,
-  "statusCode": {HttpStatus},
-  "timestamp": {Timestamp},
-  "message": {ExceptionMessage},
-  "localCode": {ExceptionLocalCode},
-  "args": {object}
-}
-```
-
-- Error response example:
-
-```json
-{
-  "ok": false,
-  "statusCode": 429,
-  "timestamp": "2024-05-24T11:36:58.434Z",
-  "message": "Too Many Requests",
-  "localCode": 10001
-}
-```
+Profile relations are loaded from the database only when they are requested in the GraphQL query.

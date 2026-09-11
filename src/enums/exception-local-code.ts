@@ -56,6 +56,6 @@ export enum ExceptionLocalCode {
   // codes
   CODE_NOT_EXISTS = 12500,
 
-  // system module
-  COUNTRY_NOT_FOUND = 12700,
+  // profile module
+  PROFILE_NOT_FOUND = 12700,
 }
