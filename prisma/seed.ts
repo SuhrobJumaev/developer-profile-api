@@ -2,6 +2,7 @@ import 'dotenv/config';
 
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '@app/database/generated/prisma/client';
+import { SocialLinkType } from '../src/common/enums/social-link-type';
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
@@ -137,8 +138,12 @@ async function main(): Promise<void> {
       socialLinks: {
         create: [
           {
-            type: 'github',
-            url: 'https://github.com/SuhrobJumaev',
+            type: SocialLinkType.Github,
+            url: 'https://github.com/SuhrobJumaev/',
+          },
+          {
+            type: SocialLinkType.Linkedin,
+            url: 'linkedin.com/in/suhrob-jumaev-00ba431b4',
           },
         ],
       },
