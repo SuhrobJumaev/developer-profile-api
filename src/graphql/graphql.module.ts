@@ -11,6 +11,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 
       autoSchemaFile: true,
       sortSchema: true,
+      introspection: true,
 
       playground: false,
 
