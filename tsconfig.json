@@ -29,9 +29,6 @@
       "@app/logger/*": [
         "src/logger/*"
       ],
-      "@app/database/*": [
-        "src/database/*"
-      ],
       "@app/rabbit/*": [
         "src/rabbit/*"
       ],

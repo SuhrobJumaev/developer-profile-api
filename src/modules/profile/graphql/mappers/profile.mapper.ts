@@ -1,16 +1,16 @@
-import {
-  Experience,
-  Profile,
-  Project,
-  Skill,
-  SocialLink,
-} from '@app/database/generated/prisma/client';
 
 import { ProfileModel } from '../models/profile.model';
 import { ExperienceMapper } from './experience.mapper';
 import { ProjectMapper } from './project.mapper';
 import { SkillMapper } from './skill.mapper';
 import { SocialLinkMapper } from './social-link.mapper';
+import {
+  Experience,
+  Profile,
+  Project,
+  Skill,
+  SocialLink,
+} from '../../../../database/generated/prisma/client';
 
 type ProfileWithRelations = Profile & {
   skills?: Skill[];

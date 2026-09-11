@@ -1,6 +1,6 @@
-import { SocialLink } from '@app/database/generated/prisma/client';
 
 import { SocialLinkModel } from '../models/social-link.model';
+import { SocialLink } from '../../../../database/generated/prisma/client';
 
 export class SocialLinkMapper {
   static toGraphQL(socialLink: SocialLink): SocialLinkModel {

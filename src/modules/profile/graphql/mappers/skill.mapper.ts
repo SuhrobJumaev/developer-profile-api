@@ -1,6 +1,6 @@
-import { Skill } from '@app/database/generated/prisma/client';
-
 import { SkillModel } from '../models/skill.model';
+import { Skill } from '../../../../database/generated/prisma/client';
+
 
 export class SkillMapper {
   static toGraphQL(skill: Skill): SkillModel {

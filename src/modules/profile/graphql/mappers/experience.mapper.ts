@@ -1,6 +1,6 @@
-import { Experience } from '@app/database/generated/prisma/client';
 
 import { ExperienceModel } from '../models/experience.model';
+import { Experience } from '../../../../database/generated/prisma/client';
 
 export class ExperienceMapper {
   static toGraphQL(experience: Experience): ExperienceModel {

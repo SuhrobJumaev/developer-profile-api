@@ -1,8 +1,8 @@
 import 'dotenv/config';
 
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient } from '@app/database/generated/prisma/client';
 import { SocialLinkType } from '../src/common/enums/social-link-type';
+import { PrismaClient } from '../src/database/generated/prisma/client';
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,

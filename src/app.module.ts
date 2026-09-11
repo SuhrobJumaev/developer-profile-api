@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { DatabaseModule } from './database/database.module';
-import { LoggerModule } from '@app/logger/logger.module';
+import { LoggerModule } from './logger/logger.module';
 
 import { rateLimitOptions } from './constants/rate-limit';
 import { GraphqlModule } from './graphql/graphql.module';

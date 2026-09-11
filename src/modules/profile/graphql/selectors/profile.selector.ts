@@ -1,5 +1,5 @@
-import { Prisma } from '@app/database/generated/prisma/client';
 import { ResolveTree } from 'graphql-parse-resolve-info';
+import { Prisma } from '../../../../database/generated/prisma/client';
 
 export function buildProfileSelect(
   fields: Record<string, ResolveTree>,
