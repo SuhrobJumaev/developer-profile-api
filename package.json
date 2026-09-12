@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "prebuild": "prisma generate && prisma migrate deploy && prisma db seed && rimraf dist",
-    "build": "nest build",
+    "build": "nest build && tsc-alias -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start:debug": "nest start --debug --watch",
     "lint": "eslint \"{src,apps,test}/**/*.ts\" --fix",
