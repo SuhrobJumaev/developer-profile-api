@@ -23,15 +23,8 @@
     "resolveJsonModule": true,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@app/crypto-utils/*": [
-        "src/crypto-utils/*"
-      ],
-      "@app/logger/*": [
-        "src/logger/*"
-      ],
-      "@app/rabbit/*": [
-        "src/rabbit/*"
-      ],
-    }
+      "@/*": ["./src/*"]
+    },
+
   }
 }
