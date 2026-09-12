@@ -11,6 +11,9 @@ RUN yarn install --frozen-lockfile
 
 COPY . .
 
+RUN test -n "$DATABASE_URL" || (echo "DATABASE_URL is missing during image build" && exit 1)
+
+
 RUN yarn build
 
 ENV NODE_ENV=production
