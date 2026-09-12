@@ -5,9 +5,13 @@ import { DatabaseModule } from './database/database.module';
 import { rateLimitOptions } from './constants/rate-limit';
 import { GraphqlModule } from './graphql/graphql.module';
 import { ProfileModule } from './modules/profile/profile.module';
+import { LoggerModule } from '@/logger/logger.module';
 
 @Module({
   imports: [
+
+    /**Logger */
+    LoggerModule,
 
     /** Database module */
     DatabaseModule,

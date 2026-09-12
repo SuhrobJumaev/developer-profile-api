@@ -1,6 +1,6 @@
 
 import { ProjectModel } from '../models/project.model';
-import { Project } from '../../../../database/generated/prisma/client';
+import { Project } from '@/database/generated/prisma/client';
 
 export class ProjectMapper {
   static toGraphQL(project: Project): ProjectModel {
