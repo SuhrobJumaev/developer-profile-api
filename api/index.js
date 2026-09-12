@@ -1,7 +1,4 @@
-// api/index.js
-// Отдельная точка входа ТОЛЬКО для Vercel serverless. main.ts не меняется и не используется здесь.
-// Импортируем уже собранные dist-модули (после nest build + tsc-alias),
-// поэтому никаких алиасов "@/..." тут нет и быть не может.
+
 
 const { NestFactory } = require('@nestjs/core');
 const { ValidationPipe } = require('@nestjs/common');
