@@ -6,7 +6,7 @@
   "private": false,
   "license": "MIT",
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": " prisma generate &&  rimraf dist",
     "build": "nest build && tsc-alias -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start:debug": "nest start --debug --watch",
@@ -23,7 +23,7 @@
     "migration:generate": "prisma migrate dev --name migration && prisma generate",
     "start": "prisma migrate deploy && prisma db seed && nest start",
     "start:dev": "nest start --watch",
-    "start:prod": "prisma migrate deploy &&  prisma generate && prisma db seed && node dist/src/main.js",
+    "start:prod": "prisma migrate deploy  && prisma db seed && node dist/src/main.js",
     "compodoc": "npx @compodoc/compodoc -p tsconfig.json -s --port 30080"
   },
   "dependencies": {
