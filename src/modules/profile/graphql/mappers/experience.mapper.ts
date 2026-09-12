@@ -3,7 +3,7 @@ import { Experience } from '@/database/generated/prisma/client';
 import { ExperienceModel } from '../models/experience.model';
 
 export class ExperienceMapper {
-  static toGraphQL(experience: Experience): ExperienceModel {
+  static toGraphQL(experience: Partial<Experience>): Partial<ExperienceModel> {
     return {
       id: experience.id,
       company: experience.company,

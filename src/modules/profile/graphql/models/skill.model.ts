@@ -3,14 +3,14 @@ import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 @ObjectType('Skill')
 export class SkillModel {
   @Field(() => ID)
-  id!: string;
+  id?: string;
 
   @Field(() => String)
-  name!: string;
+  name?: string;
 
   @Field(() => Int, { nullable: true })
   level?: number | null;
 
   @Field(() => Date)
-  createdAt!: Date;
+  createdAt?: Date;
 }

@@ -15,7 +15,16 @@ export class ProfileService {
   constructor(private readonly profileRepository: ProfileRepository) {}
 
   async getProfile(info: GraphQLResolveInfo): Promise<ProfileModel> {
-    const parsed = parseResolveInfo(info) as ResolveTree;
+    const parsed = parseResolveInfo(info) as ResolveTree | undefined;
+
+    if (!parsed) {
+      throw new AppHttpException(
+        ExceptionMessage.GRAPHQL_PARSE_ERROR,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        ExceptionLocalCode.GRAPHQL_PARSE_ERROR,
+      );
+    }
+
     const requested = parsed.fieldsByTypeName['Profile'];
 
     const select = buildProfileSelect(requested);

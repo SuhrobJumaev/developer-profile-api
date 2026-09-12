@@ -22,4 +22,5 @@ export enum ExceptionMessage {
 
   //Profile
   PROFILE_NOT_FOUND = 'Profile not found',
+  GRAPHQL_PARSE_ERROR = 'Failed to parse GraphQL resolve info',
 }

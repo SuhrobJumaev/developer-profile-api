@@ -3,11 +3,11 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 @ObjectType('SocialLink')
 export class SocialLinkModel {
   @Field(() => ID)
-  id!: string;
+  id?: string;
 
   @Field(() => String)
-  type!: string;
+  type?: string;
 
   @Field(() => String)
-  url!: string;
+  url?: string;
 }

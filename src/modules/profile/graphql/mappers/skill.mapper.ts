@@ -4,7 +4,7 @@ import { SkillModel } from '../models/skill.model';
 
 
 export class SkillMapper {
-  static toGraphQL(skill: Skill): SkillModel {
+  static toGraphQL(skill: Partial<Skill>): SkillModel {
     return {
       id: skill.id,
       name: skill.name,

@@ -58,4 +58,5 @@ export enum ExceptionLocalCode {
 
   // profile module
   PROFILE_NOT_FOUND = 12700,
+  GRAPHQL_PARSE_ERROR,
 }

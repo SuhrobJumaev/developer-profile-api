@@ -12,15 +12,15 @@ import { ProjectMapper } from './project.mapper';
 import { SkillMapper } from './skill.mapper';
 import { SocialLinkMapper } from './social-link.mapper';
 
-type ProfileWithRelations = Profile & {
-  skills?: Skill[];
-  experiences?: Experience[];
-  projects?: Project[];
-  socialLinks?: SocialLink[];
+type ProfileWithRelations = Partial<Profile> & {
+  skills?: Partial<Skill>[];
+  experiences?: Partial<Experience>[];
+  projects?: Partial<Project>[];
+  socialLinks?: Partial<SocialLink>[];
 };
 
 export class ProfileMapper {
-  static toGraphQL(profile: ProfileWithRelations): ProfileModel {
+  static toGraphQL(profile: ProfileWithRelations): Partial<ProfileModel> {
     const result: ProfileModel = {
       id: profile.id,
       firstName: profile.firstName,

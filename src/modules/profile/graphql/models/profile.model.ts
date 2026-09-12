@@ -8,10 +8,10 @@ import { SocialLinkModel } from './social-link.model';
 @ObjectType('Profile')
 export class ProfileModel {
   @Field(() => ID)
-  id!: string;
+  id?: string;
 
   @Field(() => String)
-  firstName!: string;
+  firstName?: string;
 
   @Field(() => String,{ nullable: true })
   lastName?: string | null;
@@ -29,14 +29,14 @@ export class ProfileModel {
   avatarUrl?: string | null;
 
   @Field(() => [SkillModel])
-  skills?: SkillModel[];
+  skills?: Partial<SkillModel>[];
 
   @Field(() => [ExperienceModel])
-  experiences?: ExperienceModel[];
+  experiences?: Partial<ExperienceModel>[];
 
   @Field(() => [ProjectModel])
-  projects?: ProjectModel[];
+  projects?: Partial<ProjectModel>[];
 
   @Field(() => [SocialLinkModel])
-  socialLinks?: SocialLinkModel[];
+  socialLinks?: Partial<SocialLinkModel>[];
 }
